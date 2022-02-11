@@ -1,0 +1,10 @@
+---
+- hosts: server
+
+  vars_files:
+    - vars/wordpress.yml 
+  roles:
+    - nginx 
+    - php_fpm
+    - mysql
+    - wordpress
