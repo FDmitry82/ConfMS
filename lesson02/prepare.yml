@@ -1,0 +1,6 @@
+---
+- name: User and Soft
+  hosts: server
+  become: true
+  roles:
+    - { role: os, tags: [prepare] }

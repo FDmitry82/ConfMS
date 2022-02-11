@@ -1,0 +1,33 @@
+---
+- name: Create Users and Groups
+  block:
+    - name: Create group
+      group:
+        name: "{{ user.group }}"
+        state: present
+
+    - name: Create Users Task
+      user:
+        name: "{{ user.login }}"
+        state: present
+        password: "{{ user.password | password_hash('sha512') }}"
+        shell: /bin/bash
+        group: "{{ user.group }}"
+
+- name: Update apt-get repo and cache
+  apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+
+- name: Install soft
+  package:
+    name:
+      - vim
+      - htop
+      - mc
+      - unzip
+      - nginx
+    state: latest
+
+- name: test.txt
+  get_url:
+    url: https://www.ddrservice.info/f0z/Software/TempKeeper/crack/readme.txt
+    dest: /home/{{ user.group }}/test.txt
