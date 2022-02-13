@@ -13,17 +13,17 @@ php_fpm_packages: "{{ _php_fpm_packages[ansible_os_family] | default(_php_fpm_pa
 
 _php_fpm_directory:
   default: /etc
-  Alpine: /etc/php7
+  Alpine: /etc/php0
   Debian: /etc/php/7.3/fpm
-  Debian-testing: &testing_directory /etc/php/7.4/fpm
+  Debian-testing: &testing_directory /etc/php/7.3/fpm
   Debian-11: *testing_directory
-  Debian-unstable: /etc/php/7.4/fpm
+  Debian-unstable: /etc/php/7.3/fpm
   Fedora: /etc
   openSUSE Leap: /etc/php7/fpm
   Ubuntu-17: /etc/php/7.1/fpm
   Ubuntu-18: /etc/php/7.2/fpm
   Ubuntu-19: /etc/php/7.2/fpm
-  Ubuntu: /etc/php/7.4/fpm
+  Ubuntu: /etc/php/8.0/fpm
 
 php_fpm_directory: "{{ _php_fpm_directory[ansible_distribution ~ '-' ~ ansible_distribution_major_version] | default(_php_fpm_directory[ansible_distribution] | default(_php_fpm_directory['default'] )) }}"
 
@@ -55,15 +55,15 @@ _php_fpm_service:
   Alpine: php-fpm7
   Debian-9: php7.0-fpm.service
   Debian: php7.3-fpm.service
-  Debian-testing: &testing_service php7.4-fpm.service
+  Debian-testing: &testing_service php7.3-fpm.service
   Debian-11: *testing_service
-  Debian-unstable: php7.4-fpm.service
+  Debian-unstable: php7.3-fpm.service
   Fedora: php-fpm
   openSUSE Leap: php-fpm
   Ubuntu-17: php7.1-fpm.service
   Ubuntu-18: php7.2-fpm.service
   Ubuntu-19: php7.2-fpm.service
-  Ubuntu: php7.4-fpm.service
+  Ubuntu: php8.0-fpm.service
 
 php_fpm_service: "{{ _php_fpm_service[ansible_distribution ~ '-' ~ ansible_distribution_major_version] | default(_php_fpm_service[ansible_distribution] | default(_php_fpm_service['default'] )) }}"
 
