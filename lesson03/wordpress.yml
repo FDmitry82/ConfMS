@@ -3,8 +3,13 @@
 
   vars_files:
     - vars/wordpress.yml 
+    - vars/wordpress_vault.yml
   roles:
-    - nginx 
-    - php_fpm
-    - mysql
-    - wordpress
+    - { role: nginx, tags: [nginx]}
+    - { role: php_fpm, tags: [php]}
+    - { role: mysql, tags: [mysql]}
+    - { role: wordpress, tags: [wordpress, app]}
+#    - nginx 
+#    - php_fpm
+#    - mysql
+#    - wordpress
