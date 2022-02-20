@@ -1,6 +1,24 @@
 ---
 server_name: "word.press.ru"
 
+_php_fpm_version:
+  default: php-fpm
+  Alpine: php-fpm7
+  Debian-9: php7.0-fpm
+  Debian: php7.3-fpm
+  Debian-testing: &testing_service php7.3-fpm
+  Debian-11: *testing_service
+  Debian-unstable: php7.3-fpm
+  Fedora: php-fpm
+  openSUSE Leap: php-fpm
+  Ubuntu-17: php7.1-fpm
+  Ubuntu-18: php7.2-fpm
+  Ubuntu-19: php7.2-fpm
+  Ubuntu: php8.0-fpm
+
+php_fpm_version: "{{ _php_fpm_version[ansible_distribution] | default(_php_fpm_service[ansible_distribution] ) }}"
+
+
 nginx_vhosts:
   - listen: "80"
     server_name: "{{ server_name }} www.{{ server_name }}"
@@ -14,12 +32,13 @@ nginx_vhosts:
       location = /50x.html {
         root   /usr/share/nginx/html;
       }
+
       location ~ \.php$ {
-          fastcgi_split_path_info ^(.+\.php)(/.+)$;
-          fastcgi_pass unix:/var/run/php/php-fpm.sock;
-          fastcgi_index index.php;
-          fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-          include fastcgi_params;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass unix:/var/run/php/{{ php_fpm_version }}.sock;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
       }
 
 #  - listen: "443 ssl http2"

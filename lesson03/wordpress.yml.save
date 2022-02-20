@@ -1,5 +1,5 @@
 ---
-- hosts: prod
+- hosts: prodserver
 
   vars_files:
     - vars/wordpress.yml 
