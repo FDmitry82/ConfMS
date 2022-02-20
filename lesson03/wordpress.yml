@@ -10,6 +10,7 @@
     - { role: mysql, tags: [mysql]}
     - { role: wordpress, tags: [wordpress, app]}
     - { role: tests, tags: [tests]}
+
 #    - nginx 
 #    - php_fpm
 #    - mysql
