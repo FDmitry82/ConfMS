@@ -1,0 +1,46 @@
+---
+# Check status active (running) nginx
+- name: Check status active (running) Nginx
+  shell: systemctl status nginx
+
+#- name: restart nginx
+#  service: name=nginx state=restarted
+
+- name: Chack validate nginx configuration
+  command: nginx -t -c /etc/nginx/nginx.conf
+  changed_when: false
+
+- name: reload nginx
+  service: name=nginx state=reloaded
+
+#- name: restart nginx
+#  service: name=nginx state=restarted
+
+
+# test for php-fpm
+
+# Check status active (running) php-fpm
+- name: Check status active (running) php7.3-fpm
+  shell: systemctl status {{ php_fpm_service }}
+
+
+# Check status active (running) mysql
+- name: Check status active (running) MySQL
+  shell: systemctl status mysql.service
+
+- name: Check connect wordpress db
+  community.mysql.mysql_query:
+    login_db: mysql
+    query: SHOW TABLES FROM wordpress;
+
+
+# Check connect SITE
+- name: TEST Check connect SITE
+  uri:
+    url: "http://{{ server_name }}"
+    method: GET
+    status_code: [200]
+  register: result
+  until: result.status == 200
+  retries: 3
+  delay: 3
