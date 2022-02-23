@@ -1,0 +1,17 @@
+---
+- hosts: server
+
+  vars_files:
+    - vars/wordpress.yml 
+    - vars/wordpress_vault.yml
+  roles:
+    - { role: nginx, tags: [nginx]}
+    - { role: php_fpm, tags: [php]}
+    - { role: mysql, tags: [mysql]}
+    - { role: wordpress, tags: [wordpress, app]}
+    - { role: tests, tags: [tests]}
+
+#    - nginx 
+#    - php_fpm
+#    - mysql
+#    - wordpress

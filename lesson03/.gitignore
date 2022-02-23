@@ -1,0 +1,8 @@
+*.retry
+/external_roles
+*.swp
+*.swo
+*/__pycache__
+*.pyc
+.cache
+ansible.log

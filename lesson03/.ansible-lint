@@ -1,0 +1,4 @@
+exclude_paths:
+  - vars/wordpress_vault.yml
+skip_list:
+  - '201'
