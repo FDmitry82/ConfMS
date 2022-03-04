@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include common.molecule_test"
+      include_role:
+        name: "common.molecule_test"

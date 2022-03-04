@@ -1,0 +1,9 @@
+---
+# tasks file for molecule_test
+- hosts: server
+  tasks:
+  - name: Create file
+    file:
+      path: "/tmp/devops_server.txt"
+      state: touch
+    become: yes
